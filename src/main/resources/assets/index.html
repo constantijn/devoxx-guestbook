@@ -1,0 +1,78 @@
+<html lang="en" ng-app="StarterApp">
+
+<head>
+    <meta name="viewport" content="initial-scale=1" />
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0-rc5/angular-material.min.css">
+
+
+    <style>
+        .md-toolbar-tools h1 {
+            font-size: inherit;
+            font-weight: inherit;
+            margin: inherit;
+        }
+
+        #toolbar {
+           /*background-color: #6C1D5F !important;*/
+        }
+    </style>
+</head>
+
+<body layout="column" ng-controller="AppController as vm" ng-cloak>
+<md-toolbar id="toolbar" layout="row" class="toolbar">
+    <div class="md-toolbar-tools">
+        <h1>Guestbook</h1>
+    </div>
+</md-toolbar>
+<div layout="row" flex>
+    <div layout="column" flex id="content">
+        <md-content layout="column" flex class="md-padding">
+            <md-list role="list">
+                <md-list-item class="md-1-line" ng-repeat="entry in vm.guestBookEntries">
+                    <div class="md-list-item-text">
+                        <h3>{{entry.text}}</h3>
+                    </div>
+                    <md-divider ng-if="!$last"></md-divider>
+                </md-list-item>
+            </md-list>
+            <md-card>
+                <md-input-container>
+                    <label>Add guestbook entry</label>
+                    <input ng-model="vm.newEntryText">
+                </md-input-container>
+                <md-button ng-click="vm.addEntry()"class="md-raised md-secondary">Add entry</md-button>
+
+            </md-card>
+        </md-content>
+    </div>
+</div>
+<!-- Angular Material Dependencies -->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-animate.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-aria.min.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0-rc5/angular-material.min.js"></script>
+
+<script>
+    var app = angular.module('StarterApp', ['ngMaterial']);
+    app.controller('AppController', function($http, $interval) {
+        var self = this;
+
+        var getEntries = function () {
+            $http({method: 'GET', url: '/api/guestbook'}).then(function (response) {
+                self.guestBookEntries = response.data;
+            });
+        };
+
+        $interval(getEntries, 100);
+
+        self.addEntry = function () {
+            $http({method: 'POST', url: '/api/guestbook', data: self.newEntryText});
+            self.guestBookEntries = self.guestBookEntries.unshift({text: self.newEntryText});
+        };
+    });
+
+</script>
+</body>
+
+</html>
