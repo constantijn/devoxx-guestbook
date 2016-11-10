@@ -7,7 +7,6 @@ node {
     def gitRevision = shOut "git rev-parse --short HEAD"
     def dockerImageTag = "${currentBuild.number}-${gitRevision}"
     def dockerImage = "${dockerImageName}:${dockerImageTag}"
-    def deploymentFile = "devoxx-guestbook-deployment.yml"
 
     stage 'Maven build'
     sh "mvn clean package"
