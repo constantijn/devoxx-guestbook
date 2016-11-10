@@ -10,7 +10,7 @@ spec:
         app: devoxx-guestbook
     spec:
       containers:
-      - image: eu.gcr.io/amsterdam-next/devoxx-guestbook:$DOCKER_IMAGE_TAG
+      - image: eu.gcr.io/next-amsterdam/devoxx-guestbook:$DOCKER_IMAGE_TAG
         name: devoxx-guestbook
         ports:
         - containerPort: 8080
