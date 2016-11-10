@@ -11,7 +11,9 @@ spec:
     spec:
       containers:
       - image: eu.gcr.io/amsterdam-next/devoxx-guestbook:$DOCKER_IMAGE_TAG
-        name: canary-service
+        name: devoxx-guestbook
         ports:
         - containerPort: 8080
-        - containerPort: 8081
+        env:
+        - name: GUESTBOOK_JDBC_URL
+          value: jdbc:mysql://104.155.75.143:3306/guestbook
