@@ -19,10 +19,11 @@ node {
     sh "gcloud docker push ${dockerImage}"
 
     stage "Kubernetes deploy"
-    sh "export DOCKER_IMAGE_TAG=${dockerImageTag}\n" +
-      "envsubst < .k8s/${deploymentFile}.template > ${deploymentFile}"
-    sh "kubectl apply -f ${deploymentFile}"
-
+    // sh "export DOCKER_IMAGE_TAG=${dockerImageTag}\n" +
+    //   "envsubst < .k8s/${deploymentFile}.template > ${deploymentFile}"
+    // sh "kubectl apply -f ${deploymentFile}"
+    sh "kubectl set image deployment/devoxx-guestbook devoxx-guestbook=${dockerImage}"
+    sh "kubectl rollout status deployment/devoxx-guestbook"
 }
 
 def shOut(script) {
