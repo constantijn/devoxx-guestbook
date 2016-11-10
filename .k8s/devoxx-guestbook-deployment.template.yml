@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: devoxx-guestbook
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: devoxx-guestbook
+    spec:
+      containers:
+      - image: eu.gcr.io/amsterdam-next/devoxx-guestbook:$DOCKER_IMAGE_TAG
+        name: canary-service
+        ports:
+        - containerPort: 8080
+        - containerPort: 8081
