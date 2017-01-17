@@ -24,7 +24,7 @@ node {
 
     stage "Kubernetes deploy" {
         sh "kubectl set image deployment/devoxx-guestbook devoxx-guestbook=${dockerImage}"
-        sh "kubectl rollout status deployment/devoxx-guestbook"
+        sh "kubectl rollout status deployment/devoxx-guestbook
     }
 }
 
