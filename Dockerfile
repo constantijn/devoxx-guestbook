@@ -3,5 +3,6 @@ MAINTAINER cvisinescu@xebia.com
 WORKDIR /
 COPY target/devoxx-guestbook-1.0-SNAPSHOT.jar /app/app.jar
 COPY app-config.yml /app/app-config.yml
-ENTRYPOINT [ "java", "-jar", "/app/app.jar", "server", "/app/app-config.yml" ]
+COPY entrypoint.sh /app/entrypoint.sh
+ENTRYPOINT "/app/entrypoint.sh"
 EXPOSE 8080
