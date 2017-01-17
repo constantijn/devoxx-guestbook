@@ -16,4 +16,4 @@ spec:
         - containerPort: 8080
         env:
         - name: GUESTBOOK_JDBC_URL
-          value: jdbc:mysql://104.155.75.143:3306/guestbook
+          value: jdbc:mysql://104.199.18.133:3306/guestbook
