@@ -1,28 +1,28 @@
 node {
-    stage "Checkout" {
+    stage("Checkout") {
         git url: "https://github.com/constantijn/devoxx-guestbook.git"
     }
 
-    stage "Build vars" {
+    stage("Build vars") {
         def dockerImageName = "eu.gcr.io/next-amsterdam/devoxx-guestbook"
         def gitRevision = shOut "git rev-parse --short HEAD"
         def dockerImageTag = "${currentBuild.number}-${gitRevision}"
         def dockerImage = "${dockerImageName}:${dockerImageTag}"
     }
 
-    stage 'Maven build' {
+    stage('Maven build') {
         sh "mvn clean package"
     }
 
-    stage "Docker build" {
+    stage("Docker build") {
         sh "docker build -t ${dockerImage} ."
     }
 
-    stage "Docker push" {
+    stage("Docker push") {
         sh "gcloud docker push ${dockerImage}"
     }
 
-    stage "Kubernetes deploy" {
+    stage("Kubernetes deploy") {
         sh "kubectl set image deployment/devoxx-guestbook devoxx-guestbook=${dockerImage}"
         sh "kubectl rollout status deployment/devoxx-guestbook"
     }
