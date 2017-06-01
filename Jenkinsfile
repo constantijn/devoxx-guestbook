@@ -15,7 +15,7 @@ node {
     sh "docker build -t ${dockerImage} ."
 
     stage "Docker push"
-    sh "gcloud docker push ${dockerImage}"
+    sh "gcloud docker -- push ${dockerImage}"
 
     stage "Kubernetes deploy"
     sh "kubectl set image deployment/devoxx-guestbook devoxx-guestbook=${dockerImage}"
